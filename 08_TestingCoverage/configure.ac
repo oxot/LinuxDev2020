@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.69])
-AC_INIT([Growable buffers], [0.0.0], [BUG-REPORT-ADDRESS])
+AC_INIT([Growable buffers], [0.0.1], [BUG-REPORT-ADDRESS])
 AM_INIT_AUTOMAKE([foreign])
 PKG_CHECK_MODULES([CHECK], [check])
 LT_INIT([disable-static])
