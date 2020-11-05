@@ -1,7 +1,10 @@
+#include <stdio.h>
 #include <stdint.h>
 #include <setjmp.h>
-#include "buf.h"
+#include "libbuf.h"
 
+
+int aborted;
 static jmp_buf escape;
 float* a = 0;
 
@@ -22,7 +25,7 @@ float* a = 0;
 	ck_assert_int_eq(buf_size(a), 0);
 	ck_assert_ptr_eq(a, 0);
 
-#test buf_push
+#test bufpush
 	long *ai = 0;
     for (int i = 0; i < 10000; i++)
         buf_push(ai, i);
@@ -33,7 +36,7 @@ float* a = 0;
 	ck_assert_int_eq(match, 10000);
 	buf_free(ai);
 
-#test buf_growtrunc 
+#test bufgrowtrunc 
 	long *ai = 0;
 	buf_grow(ai, 1000);
 	ck_assert_int_eq(buf_capacity(ai), 1000);
@@ -42,7 +45,7 @@ float* a = 0;
 	ck_assert_int_eq(buf_capacity(ai), 100);
     buf_free(ai);
 
-#test buf_pop
+#test bufpop
     buf_push(a, 1.1);
     buf_push(a, 1.2);
     buf_push(a, 1.3);
