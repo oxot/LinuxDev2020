@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.69])
-AC_INIT([guess], [VERSION], [BUG-REPORT-ADDRESS])
+AC_INIT([Number guessr], [0.0], [BUG-REPORT-ADDRESS])
 AM_INIT_AUTOMAKE([foreign])
 DX_INIT_DOXYGEN(guess)
 LT_INIT([disable-static])

@@ -1,8 +1,8 @@
 SUBDIRS = src
 
-doxygen-run:
+doxygen-doc:
 	doxygen Doxyfile
 	
 gitclean:
 	git clean -fd
-	rm guess.o
+	rm src/guess.o

@@ -1,17 +1,41 @@
+/** @file
+ */
+
 #include <stdio.h>
 #include <string.h>
+#include "guess.h"
 
-char* rom[100] = {"I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX", "XXI", "XXII", "XXIII", "XXIV", "XXV", "XXVI", "XXVII", "XXVIII", "XXIX", "XXX", "XXXI", "XXXII", "XXXIII", "XXXIV", "XXXV", "XXXVI", "XXXVII", "XXXVIII", "XXXIX", "XL", "XLI", "XLII", "XLIII", "XLIV", "XLV", "XLVI", "XLVII", "XLVIII", "XLIX", "L", "LI", "LII", "LIII", "LIV", "LV", "LVI", "LVII", "LVIII", "LIX", "LX", "LXI", "LXII", "LXIII", "LXIV", "LXV", "LXVI", "LXVII", "LXVIII", "LXIX", "LXX", "LXXI", "LXXII", "LXXIII", "LXXIV", "LXXV", "LXXVI", "LXXVII", "LXXVIII", "LXXIX", "LXXX", "LXXXI", "LXXXII", "LXXXIII", "LXXXIV", "LXXXV", "LXXXVI", "LXXXVII", "LXXXVIII", "LXXXIX", "XC", "XCI", "XCII", "XCIII", "XCIV", "XCV", "XCVI",	"XCVII", "XCVIII", "XCIX", "C"};
-
+#define MANUAL "Pick a number from 1 to 100 and answer the questions until the number is guessed\n\
+\n\
+Usage: guess [OPTION]\n\
+\n\
+    --help		print this help, then exit\n\
+    --version	print version number, then exit\n\
+\n\
+"
+#define VERSION "0.0"
 
 /**
-* blah
-*/
+ * Convert Arabic @p i to Roman
+ *
+ * @param i The number to convert
+ *
+ * @returns The Roman number equivalent
+ *
+ */
 char* toRom (int i)
 {
 	return rom[i-1];
 }
 
+/**
+ * Convert @p c from Roman to Arabic
+ *
+ * @param c The number to convert
+ *
+ * @returns The Arabic number equivalent
+ *
+ */
 int fromRom(char *c)
 {
 	for(int i = 0; i < 100; i++) 
@@ -29,8 +53,14 @@ int main(int argc, char** argv)
 	int f = 0;
 
 	if(argc>1)
+	{
 		if(!strcmp(argv[1], "-r"))
 			f = 1;
+		else if(!strcmp(argv[1], "--help"))
+			return !printf("%s\n", MANUAL);
+		else if(!strcmp(argv[1], "--version"))
+			return !printf("guess %s\n", VERSION);
+	}
 	if(f)	
 		printf("Pick a number from I to C\n");
 	else
