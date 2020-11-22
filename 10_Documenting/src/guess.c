@@ -4,15 +4,19 @@
 #include <stdio.h>
 #include <string.h>
 #include "guess.h"
+#include <libintl.h>
+#include <locale.h>
 
-#define MANUAL "Pick a number from 1 to 100 and answer the questions until the number is guessed\n\
+#define _(STRING) gettext(STRING)
+
+#define MANUAL _("Pick a number from 1 to 100 and answer the questions until the number is guessed\n\
 \n\
 Usage: guess [OPTION]\n\
 \n\
     --help		print this help, then exit\n\
     --version	print version number, then exit\n\
 \n\
-"
+")
 #define VERSION "0.0"
 
 /**
@@ -52,6 +56,10 @@ int main(int argc, char** argv)
 	char c;
 	int f = 0;
 
+	setlocale (LC_ALL, "");
+	bindtextdomain ("guess", ".");
+    textdomain ("guess");
+
 	if(argc>1)
 	{
 		if(!strcmp(argv[1], "-r"))
@@ -62,16 +70,16 @@ int main(int argc, char** argv)
 			return !printf("guess %s\n", VERSION);
 	}
 	if(f)	
-		printf("Pick a number from I to C\n");
+		printf(_("Pick a number from I to C\n"));
 	else
-		printf("Pick a number from 1 to 100\n");	
+		printf(_("Pick a number from 1 to 100\n"));	
 	
 	while(1)
 	{
 		if(f)
-			printf("Is your number greater than %s? (y/n)\n", toRom((y+x)/2));
+			printf(_("Is your number greater than %s? (y/n)\n"), toRom((y+x)/2));
 		else
-			printf("Is your number greater than %d? (y/n)\n", (y+x)/2);
+			printf(_("Is your number greater than %d? (y/n)\n"), (y+x)/2);
 
 		if(scanf(" %c", &c) < 0)
 			return 1;
@@ -83,7 +91,7 @@ int main(int argc, char** argv)
 				y = (y+x)/2;
 			else
 			{
-				printf("Incorrect input\n");
+				printf(_("Incorrect input\n"));
 				if(scanf(" %c", &c) < 0)
 					return 1;
 			}
@@ -91,9 +99,9 @@ int main(int argc, char** argv)
 		if(x == y)
 		{	
 			if(f)
-				printf("Your number is %s\n", toRom(x));
+				printf(_("Your number is %s\n"), toRom(x));
 			else
-				printf("Your number is %d\n", x);
+				printf(_("Your number is %d\n"), x);
 			break;
 		}
 	}
