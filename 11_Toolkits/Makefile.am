@@ -1,0 +1,3 @@
+bin_PROGRAMS = hash
+CFLAGS += $(GLIB_CFLAGS) -Wall -O0
+LIBS += $(GLIB_LIBS)
