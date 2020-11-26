@@ -7,6 +7,11 @@ void iterator(gpointer key, gpointer value, gpointer user_data)
 	printf(user_data, key, (int*)value);
 }
 
+gint comp(gconstpointer a, gconstpointer b)
+{
+	return b - a;
+}
+
 int siz(char** s)
 {
 	int c = 0;
@@ -19,11 +24,18 @@ int siz(char** s)
 	return c;
 }
 
+gboolean finder(gpointer key, gpointer value, gpointer user_data) 
+{
+	return (GPOINTER_TO_INT(value) == GPOINTER_TO_INT(user_data));
+//		printf("-> %s:  %d\n", (char*)key, (int *)value);
+}
+
 int main(void) 
 {
 	FILE *f = fopen("in.txt", "r");
 	char str[80*sizeof(char)];
 	gchar **gl;
+	GList * list = NULL, *item;
 
 	GHashTable* hash = g_hash_table_new(g_str_hash, g_str_equal);
 
@@ -35,10 +47,19 @@ int main(void)
 
 	}
 
-	g_hash_table_foreach(hash, (GHFunc)iterator, "%s: %d\n");	
+	g_hash_table_foreach(hash, (GHFunc)iterator, "%s: %d\n");
+	printf("\n");
 
-//	printf("%d\n", (int)g_hash_table_lookup(hash, "ad"));// Richmond
+	list = g_list_alloc();	
+	list = g_hash_table_get_values(hash);
+	list = g_list_sort (list, (GCompareFunc)comp);
 
+	for(item = list; item; item = item->next)
+	{
+	    printf("-> %s:  %d\n", /*(char*)g_hash_table_find(hash, (GHRFunc)finder, item->data)*/" ", GPOINTER_TO_INT(item->data));
+    	
+	}
+//	g_list_foreach(list, (GFunc)iprint, hash);
 	g_hash_table_destroy(hash);
 	g_strfreev(gl); 
 	fclose(f);
